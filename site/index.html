@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kill Node.js | Presentation</title>
+  <style>
+    body { margin: 0; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #09121f; color: #e8eef4; }
+    .hero { background: linear-gradient(135deg, #0a4a9c 0%, #0f5fbb 48%, #1c76dd 100%); padding: 64px 24px; text-align: center; }
+    .hero h1 { margin: 0; font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1.05; }
+    .hero p { margin: 16px auto 0; max-width: 700px; font-size: 1.1rem; color: #dce8ff; }
+    .container { max-width: 980px; margin: -40px auto 56px; padding: 0 24px; }
+    .cards { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 26px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22); }
+    .card h2 { margin-top: 0; color: #b7d5ff; }
+    .card p { margin: 12px 0 0; line-height: 1.7; color: #d7e3f5; }
+    .section { margin-top: 36px; }
+    .section h2 { margin-bottom: 18px; color: #8dc5ff; }
+    .list { list-style: none; padding: 0; margin: 0; }
+    .list li { margin-bottom: 12px; padding-left: 18px; position: relative; }
+    .list li:before { content: "•"; position: absolute; left: 0; color: #4fc3ff; }
+    pre { background: #07101e; border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 18px; overflow-x: auto; color: #d5e0ff; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .footer { text-align: center; margin-top: 40px; padding: 18px 0; color: #8aa8ce; }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <h1>Kill Node.js</h1>
+    <p>เครื่องมือเล็ก ๆ สำหรับ Windows ที่ช่วยให้คุณจัดการ Node.js process ได้ง่าย ๆ โดยไม่ต้องเปิด Task Manager หรือจำ PID เอง</p>
+  </section>
+
+  <main class="container">
+    <div class="cards">
+      <div class="card">
+        <h2>Purpose</h2>
+        <p>สคริปต์นี้ออกแบบมาเพื่อหยุด Node.js process ที่ค้างอยู่หลังการทดสอบหรือรันงานที่ไม่ได้ปิดเอง</p>
+      </div>
+      <div class="card">
+        <h2>Target</h2>
+        <p>Windows users ที่ต้องการ clean-up Node.js workflow แบบเร็ว และควบคุมได้ไม่ kill ทุก process โดยไม่ตั้งใจ</p>
+      </div>
+      <div class="card">
+        <h2>Deploy</h2>
+        <p>พร้อมใช้ GitHub Pages ด้วย workflow ที่ deploy โฟลเดอร์ <code>site</code> อัตโนมัติเมื่อ push ไปยัง <code>main</code></p>
+      </div>
+    </div>
+
+    <section class="section">
+      <h2>What is included</h2>
+      <ul class="list">
+        <li><strong>kill-node.bat</strong> — Batch script สำหรับ Windows</li>
+        <li><strong>kill-node.ps1</strong> — PowerShell script สำหรับ Windows</li>
+        <li><strong>site/index.html</strong> — หน้า presentation สำหรับ GitHub Pages</li>
+        <li><strong>.github/workflows/pages.yml</strong> — deploy workflow</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>How to use</h2>
+      <p>เปิด PowerShell แล้วไปยังโฟลเดอร์โปรเจค จากนั้นรันคำสั่งต่อไปนี้:</p>
+      <pre><code>.\kill-node.bat
+</code></pre>
+      <p>หรือใช้ PowerShell script:</p>
+      <pre><code>.\kill-node.ps1
+</code></pre>
+    </section>
+
+    <section class="section">
+      <h2>Kill process แบบเลือกได้</h2>
+      <p>ทั้งสองสคริปต์จะ:</p>
+      <ul class="list">
+        <li>แสดงรายการ Node.js process ที่กำลังรัน</li>
+        <li>ให้ผู้ใช้เลือกหมายเลขเพื่อ kill เฉพาะ process ที่ต้องการ</li>
+        <li>ให้ผู้ใช้เลือก <code>A</code> เพื่อ kill all หรือ <code>Q</code> เพื่อยกเลิก</li>
+        <li>จะแสดงผล และรอให้กด Enter ก่อนปิดหน้าต่าง</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Quick commands</h2>
+      <pre><code># ใน PowerShell
+.\kill-node.bat
+
+# หรือ
+.\kill-node.ps1
+</code></pre>
+    </section>
+
+    <section class="section">
+      <h2>Why this repo</h2>
+      <p>Repo นี้ช่วยให้การจัดการ Node.js process บน Windows เข้าใจง่ายและปลอดภัยขึ้น โดยเฉพาะเมื่อคุณต้องหยุด process ที่ค้างอยู่หลังการพัฒนา หรือทดสอบแบบอัตโนมัติ</p>
+    </section>
+
+    <div class="footer">This repo is designed for humans: easy to read, easy to use, and inspiring to share.</div>
+  </main>
+</body>
+</html>
