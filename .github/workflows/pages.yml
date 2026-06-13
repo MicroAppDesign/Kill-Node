@@ -24,7 +24,7 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           # ระบุโฟลเดอร์ที่มี index.html ของคุณ (ถ้า index.html อยู่ที่ root ให้ใช้ .)
-          path: '.' 
+          path: './site' 
 
       - name: Deploy to GitHub Pages
         id: deployment
