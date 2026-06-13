@@ -1,4 +1,4 @@
-
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -6,31 +6,26 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v5
 
-      # 1. ติดตั้ง Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
         with:
-          node-version: '24'
+          # ระบุโฟลเดอร์ที่มี index.html ของคุณ (ถ้า index.html อยู่ที่ root ให้ใช้ .)
+          path: '.' 
 
-      # 2. ติดตั้ง Dependencies และรันคำสั่ง Build เพื่อสร้างโฟลเดอร์ dist
-      - name: Install and Build
-        run: |
-          npm install
-          npm run build
-
-      # 3. สั่ง Deploy โฟลเดอร์ที่ได้จากการ Build (เช่น dist)
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site # 👈 เปลี่ยนให้ตรงกับโฟลเดอร์ที่บิวด์ได้ (เช่น dist, build, หรือ out)
-          publish_branch: gh-pages
+        id: deployment
+        uses: actions/deploy-pages@v5
