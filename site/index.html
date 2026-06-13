@@ -3,96 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kill Node.js | Presentation</title>
+  <title>Kill Node.js | เครื่องมือจัดการ Process</title>
   <style>
-    body { margin: 0; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #09121f; color: #e8eef4; }
-    .hero { background: linear-gradient(135deg, #0a4a9c 0%, #0f5fbb 48%, #1c76dd 100%); padding: 64px 24px; text-align: center; }
-    .hero h1 { margin: 0; font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1.05; }
-    .hero p { margin: 16px auto 0; max-width: 700px; font-size: 1.1rem; color: #dce8ff; }
-    .container { max-width: 980px; margin: -40px auto 56px; padding: 0 24px; }
-    .cards { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-    .card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 26px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22); }
-    .card h2 { margin-top: 0; color: #b7d5ff; }
-    .card p { margin: 12px 0 0; line-height: 1.7; color: #d7e3f5; }
-    .section { margin-top: 36px; }
-    .section h2 { margin-bottom: 18px; color: #8dc5ff; }
-    .list { list-style: none; padding: 0; margin: 0; }
-    .list li { margin-bottom: 12px; padding-left: 18px; position: relative; }
-    .list li:before { content: "•"; position: absolute; left: 0; color: #4fc3ff; }
-    pre { background: #07101e; border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 18px; overflow-x: auto; color: #d5e0ff; }
-    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    .footer { text-align: center; margin-top: 40px; padding: 18px 0; color: #8aa8ce; }
+    :root {
+      --primary: #2563eb;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+    }
+
+    * { box-sizing: border-box; }
+    body { 
+      margin: 0; 
+      font-family: 'Inter', sans-serif; 
+      background: var(--bg); 
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .hero { 
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); 
+      padding: 80px 24px; 
+      text-align: center; 
+    }
+    .hero h1 { margin: 0; font-size: 3rem; letter-spacing: -0.05em; }
+    .hero p { margin: 16px auto 0; max-width: 600px; color: #bfdbfe; font-size: 1.1rem; }
+    
+    .btn-download {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 12px 28px;
+      background: #ffffff;
+      color: #1e3a8a;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .btn-download:hover { background: #e2e8f0; }
+
+    .container { max-width: 900px; margin: -40px auto 56px; padding: 0 24px; }
+
+    .cards { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .card { 
+      background: var(--surface); 
+      border-radius: 16px; 
+      padding: 24px; 
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.2s;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card h2 { margin-top: 0; color: #60a5fa; font-size: 1.25rem; }
+
+    .section { margin-top: 48px; }
+    .section h2 { border-left: 4px solid var(--primary); padding-left: 16px; margin-bottom: 24px; }
+
+    pre { 
+      background: #020617; 
+      padding: 20px; 
+      border-radius: 12px; 
+      overflow-x: auto; 
+      border: 1px solid #334155;
+    }
+    code { color: #cbd5e1; font-family: 'Fira Code', monospace; }
+
+    .list { list-style: none; padding: 0; }
+    .list li { margin-bottom: 12px; display: flex; align-items: flex-start; }
+    .list li::before { content: "✔"; margin-right: 12px; color: #22c55e; }
+
+    .footer { text-align: center; margin-top: 64px; color: var(--text-dim); font-size: 0.9rem; }
   </style>
 </head>
 <body>
   <section class="hero">
     <h1>Kill Node.js</h1>
-    <p>เครื่องมือเล็ก ๆ สำหรับ Windows ที่ช่วยให้คุณจัดการ Node.js process ได้ง่าย ๆ โดยไม่ต้องเปิด Task Manager หรือจำ PID เอง</p>
+    <p>เคยไหมที่ทำงานอยู่ดีๆ เครื่องค้างจากการรัน Node.js เบื้องหลังจำนวนมากโดยไม่รู้ตัว? กว่าจะรู้ตัวว่าเครื่องอืดหรือค้างเพราะ process ที่กินทรัพยากรอยู่...</p>
+    <a href="https://microappdesign.github.io/Kill-Node/" class="btn-download" target="_blank">ดาวน์โหลดจาก GitHub</a>
   </section>
 
   <main class="container">
     <div class="cards">
       <div class="card">
-        <h2>Purpose</h2>
-        <p>สคริปต์นี้ออกแบบมาเพื่อหยุด Node.js process ที่ค้างอยู่หลังการทดสอบหรือรันงานที่ไม่ได้ปิดเอง</p>
+        <h2>ปัญหาที่กวนใจ</h2>
+        <p>หากคุณกำลังเจอปัญหานี้ แล้วไม่รู้จะจัดการยังไง หรือไม่อยากเปิด Task Manager เพื่อไล่หา process ที่ต้องการหยุด?</p>
       </div>
       <div class="card">
-        <h2>Target</h2>
-        <p>Windows users ที่ต้องการ clean-up Node.js workflow แบบเร็ว และควบคุมได้ไม่ kill ทุก process โดยไม่ตั้งใจ</p>
+        <h2>ทางออกของคุณ</h2>
+        <p><code>kill-node</code> คือเครื่องมือที่ช่วยให้คุณหยุด Node.js processes บน Windows ของคุณได้อย่างง่ายดายและรวดเร็วทันใจ!</p>
       </div>
       <div class="card">
-        <h2>Deploy</h2>
-        <p>พร้อมใช้ GitHub Pages ด้วย workflow ที่ deploy โฟลเดอร์ <code>site</code> อัตโนมัติเมื่อ push ไปยัง <code>main</code></p>
+        <h2>ออกแบบมาเพื่อ Local</h2>
+        <p>เครื่องมือขนาดเล็กที่เน้นการใช้งานบน Windows ในเครื่องของคุณโดยตรง ไม่ต้องติดตั้งอะไรเพิ่มเติม</p>
       </div>
     </div>
 
     <section class="section">
-      <h2>What is included</h2>
+      <h2>ส่วนประกอบในโปรเจค</h2>
       <ul class="list">
-        <li><strong>kill-node.bat</strong> — Batch script สำหรับ Windows</li>
-        <li><strong>kill-node.ps1</strong> — PowerShell script สำหรับ Windows</li>
-        <li><strong>site/index.html</strong> — หน้า presentation สำหรับ GitHub Pages</li>
-        <li><strong>.github/workflows/pages.yml</strong> — deploy workflow</li>
+        <li><strong>kill-node.bat</strong> — สคริปต์แบบ Batch สำหรับ Windows</li>
+        <li><strong>kill-node.ps1</strong> — สคริปต์แบบ PowerShell สำหรับ Windows</li>
       </ul>
     </section>
 
     <section class="section">
-      <h2>How to use</h2>
-      <p>เปิด PowerShell แล้วไปยังโฟลเดอร์โปรเจค จากนั้นรันคำสั่งต่อไปนี้:</p>
-      <pre><code>.\kill-node.bat
-</code></pre>
-      <p>หรือใช้ PowerShell script:</p>
-      <pre><code>.\kill-node.ps1
-</code></pre>
+      <h2>วิธีใช้งาน</h2>
+      <p>เปิด PowerShell ในโฟลเดอร์โปรเจคของคุณแล้วพิมพ์คำสั่ง:</p>
+      <pre><code>.\kill-node.ps1</code></pre>
+      <p>หรือถ้าต้องการใช้ Batch file:</p>
+      <pre><code>.\kill-node.bat</code></pre>
     </section>
 
     <section class="section">
-      <h2>Kill process แบบเลือกได้</h2>
-      <p>ทั้งสองสคริปต์จะ:</p>
+      <h2>คุณสมบัติการเลือกจัดการ</h2>
       <ul class="list">
-        <li>แสดงรายการ Node.js process ที่กำลังรัน</li>
-        <li>ให้ผู้ใช้เลือกหมายเลขเพื่อ kill เฉพาะ process ที่ต้องการ</li>
-        <li>ให้ผู้ใช้เลือก <code>A</code> เพื่อ kill all หรือ <code>Q</code> เพื่อยกเลิก</li>
-        <li>จะแสดงผล และรอให้กด Enter ก่อนปิดหน้าต่าง</li>
+        <li>รายการ Node.js process จะแสดงขึ้นมาให้เลือกชัดเจน</li>
+        <li>เลือกหมายเลขเพื่อปิดเฉพาะ Process นั้นๆ</li>
+        <li>เลือก <code>A</code> เพื่อปิดทั้งหมด (Kill All)</li>
+        <li>เลือก <code>Q</code> เพื่อออกจากโปรแกรม</li>
       </ul>
     </section>
 
-    <section class="section">
-      <h2>Quick commands</h2>
-      <pre><code># ใน PowerShell
-.\kill-node.bat
-
-# หรือ
-.\kill-node.ps1
-</code></pre>
-    </section>
-
-    <section class="section">
-      <h2>Why this repo</h2>
-      <p>Repo นี้ช่วยให้การจัดการ Node.js process บน Windows เข้าใจง่ายและปลอดภัยขึ้น โดยเฉพาะเมื่อคุณต้องหยุด process ที่ค้างอยู่หลังการพัฒนา หรือทดสอบแบบอัตโนมัติ</p>
-    </section>
-
-    <div class="footer">This repo is designed for humans: easy to read, easy to use, and inspiring to share.</div>
+    <div class="footer">
+      ออกแบบมาเพื่อพัฒนาประสบการณ์การเขียนโปรแกรมบนเครื่อง Local ของคุณ
+    </div>
   </main>
 </body>
 </html>
