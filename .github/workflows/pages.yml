@@ -24,8 +24,8 @@ jobs:
       # 2. ติดตั้ง Dependencies และรันคำสั่ง Build เพื่อสร้างโฟลเดอร์ dist
       - name: Install and Build
         run: |
-          pnpm install
-          pnpm run build
+          npm install
+          npm run build
 
       # 3. สั่ง Deploy โฟลเดอร์ที่ได้จากการ Build (เช่น dist)
       - name: Deploy to GitHub Pages
